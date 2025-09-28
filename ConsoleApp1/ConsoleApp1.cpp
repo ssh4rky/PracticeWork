@@ -4,6 +4,8 @@
 
 using namespace std;
 
+//1
+
 struct Date {
 	int day;
 	int month;
@@ -92,6 +94,59 @@ public:
 	}
 };
 
+//3
+class Square {
+protected:
+	int size;
+
+public:
+	Square(int s) : size(s) {}
+
+	void drawSquare() const {
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				cout << "#";
+			}
+			cout << endl;
+		}
+	}
+
+	int getSize() const { return size; }
+};
+
+class Circle : public Square {
+private:
+	int r;
+
+public:
+	Circle(int s, int radius) : Square(s), r(radius) {}
+
+	void drawCircleInSquare() const {
+		int center = size / 2;
+		for (int y = 0; y < size; y++) {
+			for (int x = 0; x < size; x++) {
+				if (y == 0 || y == size - 1 || x == 0 || x == size - 1) {
+					cout << "#";
+				}
+				else {
+					int dx = x - center;
+					int dy = y - center;
+					double dist = sqrt(dx * dx + dy * dy);
+
+					if (dist >= r - 0.5 && dist <= r + 0.5) {
+						cout << "$";
+					}
+					else {
+						cout << " ";
+					}
+				}
+			}
+			cout << endl;
+		}
+	}
+};
+
+
 int main()
 {
 	Passport passport1;
@@ -101,5 +156,8 @@ int main()
 
 	ForeignPassport passport2;
 	passport2.PrintForeignInfo();
+
+	Circle c(50, 20);
+	c.drawCircleInSquare();
 }
 
