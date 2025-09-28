@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 using namespace std;
 
@@ -114,12 +116,24 @@ public:
 	int getSize() const { return size; }
 };
 
-class Circle : public Square {
-private:
+class Circle {
+protected:
 	int r;
 
 public:
-	Circle(int s, int radius) : Square(s), r(radius) {}
+	Circle(int radius) : r(radius) {}
+
+	double getRadius() const { return r; }
+
+	double getCircumference() const {
+		const double PI = 3.141592653589793;
+		return 2 * PI * r;
+	}
+};
+
+class CircleInSquare : public Square, public Circle {
+public:
+	CircleInSquare(int s) : Square(s), Circle(s / 2) {}
 
 	void drawCircleInSquare() const {
 		int center = size / 2;
@@ -143,6 +157,7 @@ public:
 			}
 			cout << endl;
 		}
+		cout << "Circumference = " << getCircumference() << endl;
 	}
 };
 
@@ -157,7 +172,7 @@ int main()
 	ForeignPassport passport2;
 	passport2.PrintForeignInfo();
 
-	Circle c(50, 20);
-	c.drawCircleInSquare();
+	CircleInSquare siq(20);
+	siq.drawCircleInSquare();
 }
 
