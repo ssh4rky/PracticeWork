@@ -75,15 +75,6 @@ public:
 		visaTypes.push_back("Common");
 	}
 
-	void AddVisa(const vector<string>& countries, const string& type) {
-		visaCountries.push_back(countries);
-		visaTypes.push_back(type);
-	}
-
-	void ClearVisas() {
-
-	}
-
 	void PrintVisas() const {
 		cout << "Visas:\n";
 		for (size_t i = 0; i < visaCountries.size(); ++i) {
