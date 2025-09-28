@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -62,33 +63,41 @@ public:
 
 class ForeignPassport : public Passport {
 private:
-	bool visa;
-	string visatype;
+	vector<vector<string>> visaCountries;
+	vector<string> visaTypes;
+
 public:
-	ForeignPassport(bool visa, const string& visatype,
-		const string& nationality = "Uzbek")
-		: Passport(), visa(visa), visatype(visatype) {
-		this->nationality = nationality;
+	ForeignPassport() : Passport() {
+		visaCountries.push_back({ "USA", "Canada" });
+		visaTypes.push_back("Business");
+
+		visaCountries.push_back({ "Singapore", "France" });
+		visaTypes.push_back("Common");
 	}
 
-	bool CheckInfo() {
-		return visa;
+	void AddVisa(const vector<string>& countries, const string& type) {
+		visaCountries.push_back(countries);
+		visaTypes.push_back(type);
 	}
 
-	void PrintInfo() override {
-		Passport::PrintInfo();
-		cout << "Visa: " << (visa ? "Yes" : "No") << endl;
-		if (visa)
-			cout << "Visa type: " << visatype << endl;
+	void ClearVisas() {
+
 	}
 
-	void GetForeignerInfo() {
-		if (!CheckInfo()) {
-			cout << "The foreigner is illegal" << endl;
+	void PrintVisas() const {
+		cout << "Visas:\n";
+		for (size_t i = 0; i < visaCountries.size(); ++i) {
+			cout << visaTypes[i] << ": ";
+			for (const auto& c : visaCountries[i]) {
+				cout << c << " ";
+			}
+			cout << endl;
 		}
-		else {
-			cout << "The foreigner is legal with visa type: " << visatype << endl;
-		}
+	}
+
+	void PrintForeignInfo() {
+		PrintInfo();
+		PrintVisas();
 	}
 };
 
@@ -99,7 +108,7 @@ int main()
 
 	cout << endl;
 
-	ForeignPassport passport2(true, "Business");
-	passport2.PrintInfo();
+	ForeignPassport passport2;
+	passport2.PrintForeignInfo();
 }
 
